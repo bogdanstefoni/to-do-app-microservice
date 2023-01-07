@@ -8,7 +8,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
-import java.util.List;
 
 @Entity
 public class Task {
@@ -19,7 +18,7 @@ public class Task {
 
     private String title;
 
-    private List<String> taskDescription;
+    private String taskDescription;
 
     @CreationTimestamp
     private Date creationTime;
@@ -46,11 +45,11 @@ public class Task {
         this.title = title;
     }
 
-    public List<String> getTaskDescription() {
+    public String getTaskDescription() {
         return taskDescription;
     }
 
-    public void setTaskDescription(List<String> taskDescription) {
+    public void setTaskDescription(String taskDescription) {
         this.taskDescription = taskDescription;
     }
 

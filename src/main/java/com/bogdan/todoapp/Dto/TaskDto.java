@@ -1,14 +1,12 @@
 package com.bogdan.todoapp.Dto;
 
-import java.util.List;
-
 public class TaskDto {
 
     private Long id;
 
     private String title;
 
-    private List<String> taskDescription;
+    private String taskDescription;
 
     public Long getId() {
         return id;
@@ -26,11 +24,11 @@ public class TaskDto {
         this.title = title;
     }
 
-    public List<String> getTaskDescription() {
+    public String getTaskDescription() {
         return taskDescription;
     }
 
-    public void setTaskDescription(List<String> TaskDescription) {
+    public void setTaskDescription(String TaskDescription) {
         this.taskDescription = TaskDescription;
     }
 
