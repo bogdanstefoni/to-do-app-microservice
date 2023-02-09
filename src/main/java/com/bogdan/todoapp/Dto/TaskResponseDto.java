@@ -6,6 +6,8 @@ public class TaskResponseDto {
 
     private String TaskDescription;
 
+    private String userId;
+
     private String environment;
 
     public String getTitle() {
@@ -22,6 +24,14 @@ public class TaskResponseDto {
 
     public void setTaskDescription(String TaskDescription) {
         this.TaskDescription = TaskDescription;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getEnvironment() {

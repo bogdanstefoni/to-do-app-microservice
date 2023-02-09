@@ -26,6 +26,8 @@ public class Task {
     @UpdateTimestamp
     private Date updateTime;
 
+    private Long userId;
+
     public Task() {
     }
 
@@ -69,14 +71,11 @@ public class Task {
         this.updateTime = updateTime;
     }
 
-    @Override
-    public String toString() {
-        return "Task{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", taskDescription='" + taskDescription + '\'' +
-                ", creationTime=" + creationTime +
-                ", updateTime=" + updateTime +
-                '}';
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }
