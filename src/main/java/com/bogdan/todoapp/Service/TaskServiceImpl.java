@@ -50,30 +50,32 @@ public class TaskServiceImpl {
         return new ResponseEntity<>(responseDto, OK);
     }
 
-    public ResponseEntity<List<TaskDto>> findByTaskName(String taskName) {
-        List<Task> tasks = taskRepository.findByTitle(taskName);
+    public ResponseEntity<TaskDto> findByTaskName(String taskName) {
+        Task tasks = taskRepository.findByTitle(taskName);
 
-        return getStringResponseEntity(tasks);
+
+        TaskDto taskDto = mapToTaskDto(tasks);
+        return new ResponseEntity<>(taskDto, OK);
     }
 
     public ResponseEntity<TaskDto> createTask(TaskDto taskDto) {
         Task task = mapToTask(taskDto);
         task.setUserId(taskDto.getUserId());
-        taskRepository.save(task);
         TaskDto responseDto = mapToTaskDto(task);
+        taskRepository.save(task);
         return new ResponseEntity<>(responseDto, OK);
     }
 
-    public ResponseEntity<TaskDto> updateTask(TaskDto taskDto) {
-        Task task = taskRepository.findById(taskDto.getUserId())
-                .orElseThrow(() -> new RuntimeException("task " + taskDto.getUserId() +
-                        " No found"));
+    public ResponseEntity<TaskDto> updateTask(TaskDto taskDto, long userId) {
+        Task currentTask = taskRepository.findTaskByUserId(userId);
 
-        mapToTask(taskDto, task);
+        currentTask.setTitle(taskDto.getTitle());
+        currentTask.setTaskDescription(taskDto.getTaskDescription());
 
-        TaskDto updatedTaskDto = mapToTaskDto(taskRepository.save(task));
+        TaskDto responseDto = mapToTaskDto(taskRepository.save(currentTask));
 
-        return new ResponseEntity<>(updatedTaskDto, OK);
+        return new ResponseEntity<>(responseDto, OK);
+
     }
 
     public void deleteTaskById(Long id) {

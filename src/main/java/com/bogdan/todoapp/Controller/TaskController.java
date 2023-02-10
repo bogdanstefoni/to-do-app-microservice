@@ -31,7 +31,7 @@ public class TaskController {
     }
 
     @GetMapping("/task/{taskName}")
-    public ResponseEntity<List<TaskDto>> findByTaskName(@PathVariable String taskName) {
+    public ResponseEntity<TaskDto> findByTaskName(@PathVariable String taskName) {
         return taskServiceImpl.findByTaskName(taskName);
     }
 
@@ -42,10 +42,10 @@ public class TaskController {
         return taskServiceImpl.createTask(taskDto);
     }
 
-    @PutMapping("/update/{taskName}")
-    public ResponseEntity<TaskDto> updateTask(@RequestBody TaskDto TaskDto, @PathVariable String taskName) {
+    @PutMapping("/{userId}/update")
+    public ResponseEntity<TaskDto> updateTask(@RequestBody TaskDto taskDto, @PathVariable Long userId) {
 
-        return taskServiceImpl.updateTask(TaskDto);
+        return taskServiceImpl.updateTask(taskDto, userId);
     }
 
     @DeleteMapping("/task/{id}")

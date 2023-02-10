@@ -4,7 +4,7 @@ public class TaskResponseDto {
 
     private String title;
 
-    private String TaskDescription;
+    private String taskDescription;
 
     private String userId;
 
@@ -19,11 +19,11 @@ public class TaskResponseDto {
     }
 
     public String getTaskDescription() {
-        return TaskDescription;
+        return taskDescription;
     }
 
     public void setTaskDescription(String TaskDescription) {
-        this.TaskDescription = TaskDescription;
+        this.taskDescription = TaskDescription;
     }
 
     public String getUserId() {
