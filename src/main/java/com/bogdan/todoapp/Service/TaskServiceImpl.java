@@ -67,12 +67,20 @@ public class TaskServiceImpl {
     }
 
     public ResponseEntity<TaskDto> updateTask(TaskDto taskDto, long userId) {
-        Task currentTask = taskRepository.findTaskByUserId(userId);
+        List<Task> currentTasks = taskRepository.findByUserId(userId);
+        TaskDto responseDto = new TaskDto();
 
-        currentTask.setTitle(taskDto.getTitle());
-        currentTask.setTaskDescription(taskDto.getTaskDescription());
+        List<Task> existingTitleTasks = currentTasks.stream()
+                .filter(t -> t.getTitle().equals(taskDto.getTitle()))
+                .toList();
 
-        TaskDto responseDto = mapToTaskDto(taskRepository.save(currentTask));
+        for (Task task : existingTitleTasks) {
+            task.setTitle(taskDto.getTitle());
+            task.setTaskDescription(taskDto.getTaskDescription());
+            responseDto = mapToTaskDto(taskRepository.save(task));
+
+        }
+
 
         return new ResponseEntity<>(responseDto, OK);
 
