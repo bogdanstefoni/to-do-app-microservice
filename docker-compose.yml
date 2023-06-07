@@ -1,0 +1,59 @@
+version: '3.7'
+
+services:
+  to-do-user:
+    image: justbogdy/to-do-user:1.0.4
+    ports:
+      - "8100:8100"
+    networks:
+      - to-do-app-network
+    depends_on:
+      - mysqldb
+      - naming-server
+    environment:
+      SPRING_APPLICATION_JSON: '{"eureka":{"client":{"serviceUrl":{"defaultZone":"http://naming-server:8761/eureka"}}}}'
+
+  to-do-app:
+    image: justbogdy/to-do-app:1.0.5
+    ports:
+      - "8200:8200"
+    networks:
+      - to-do-app-network
+    depends_on:
+      - mysqldb
+      - naming-server
+    environment:
+      SPRING_APPLICATION_JSON: '{"eureka":{"client":{"serviceUrl":{"defaultZone":"http://naming-server:8761/eureka"}}}}'
+
+  naming-server:
+    image: justbogdy/naming-server
+    ports:
+      - "8761:8761"
+    networks:
+      - to-do-app-network
+    environment:
+      SPRING_APPLICATION_JSON: '{"eureka":{"client":{"register":{"withEureka":"false"}}}},
+                                 {"eureka":{"client":{"fetchRegistry":"false"}}}'
+
+
+  api-gateway:
+    image: justbogdy/api-gateway
+    ports:
+      - "8765:8765"
+    networks:
+      - to-do-app-network
+    depends_on:
+      - naming-server
+    environment:
+      SPRING_APPLICATION_JSON: '{"eureka":{"client":{"serviceUrl":{"defaultZone":"http://naming-server:8761/eureka"}}}}'
+
+
+  mysqldb:
+    image: mysql:8
+    networks:
+      - to-do-app-network
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=root
+networks:
+  to-do-app-network:
